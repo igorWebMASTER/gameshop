@@ -4,6 +4,13 @@ import { Card } from 'react-bootstrap';
 import Rating from './Rating';
 
 const Products = ({ product }) => {
+  const formatPrice = (price) => {
+    return new Intl.NumberFormat('pt-Br', {
+      style: 'currency',
+      currency: 'BRL',
+    }).format(price);
+  };
+
   return (
     <Card className='my-3 p-3 rounded'>
       <Link to={`/product/${product._id}`}>
@@ -22,7 +29,7 @@ const Products = ({ product }) => {
             text={`${product.numReviews} avaliações`}
           />
         </Card.Text>
-        <Card.Text as='h3'>R$ {product.price}</Card.Text>
+        <Card.Text as='h3'>{formatPrice(product.price)}</Card.Text>
       </Card.Body>
     </Card>
   );
