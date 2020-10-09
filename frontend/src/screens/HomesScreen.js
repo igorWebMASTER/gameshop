@@ -2,7 +2,9 @@ import React, { useEffect } from 'react';
 import { Row, Col, Spinner } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import Product from '../components/Product';
+import Loader from '../components/Loader';
 import { listProducts } from '../actions/productActions';
+import Message from '../components/Message';
 
 const HomeScreen = () => {
   const dispatch = useDispatch();
@@ -19,9 +21,9 @@ const HomeScreen = () => {
       <h1>Últimos produtos</h1>
       <Row>
         {loading ? (
-          <Spinner animation='border' role='status'>
-            <span className='sr-only'>Loading...</span>
-          </Spinner>
+          <Loader />
+        ) : error ? (
+          <Message variant='danger'>{error}</Message>
         ) : (
           products.map((product) => (
             <Col key={product._id} sm={12} md={6} lg={4} xl={3}>
