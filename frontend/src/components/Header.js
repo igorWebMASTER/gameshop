@@ -1,5 +1,12 @@
 import React from 'react';
-import { Navbar, Nav, NavDropdown, Container } from 'react-bootstrap';
+import {
+  Navbar,
+  Nav,
+  NavDropdown,
+  Image,
+  Container,
+  Form,
+} from 'react-bootstrap';
 import { LinkContainer } from 'react-router-bootstrap';
 const Header = () => {
   return (
@@ -11,8 +18,9 @@ const Header = () => {
       >
         <Container>
           <LinkContainer to='/'>
-            <Navbar.Brand> Gameshop</Navbar.Brand>
+            <Navbar.Brand> GAMESHOP</Navbar.Brand>
           </LinkContainer>
+
           <Navbar.Toggle aria-controls='basic-navbar-nav' />
           <Navbar.Collapse id='basic-navbar-nav'>
             <Nav className='ml-auto'>
