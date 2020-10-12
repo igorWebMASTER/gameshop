@@ -15,6 +15,16 @@ h1 {
   padding: 1rem 0;
 }
 
+.rounded.hover-product--list {
+  transition: all 500ms ease-in-out;
+  box-shadow: 0 4px 0px rgba(0, 0, 0, 0.2);
+}
+
+.rounded.hover-product--list:hover {
+  transition: all 500ms ease-in-out;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+}
+
 h2 {
   font-size: 1.4rem;
   padding: 0.5rem 0;

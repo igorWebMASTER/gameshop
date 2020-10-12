@@ -12,7 +12,7 @@ const Products = ({ product }) => {
   };
 
   return (
-    <Card className='my-3 p-3 rounded'>
+    <Card className='my-3 p-3 rounded hover-product--list'>
       <Link to={`/product/${product._id}`}>
         <Card.Img src={product.image} variant='top' />
       </Link>
