@@ -20,7 +20,7 @@ const authUser = asyncHandler(async (req, res) => {
     });
   } else {
     res.status(401);
-    throw new Error('Invalid email or password');
+    throw new Error('Email ou senha inválidos');
   }
 });
 
@@ -34,7 +34,7 @@ const registerUser = asyncHandler(async (req, res) => {
 
   if (userExists) {
     res.status(400);
-    throw new Error('User already exists');
+    throw new Error('Usuário já existe');
   }
 
   const user = await User.create({
@@ -53,7 +53,7 @@ const registerUser = asyncHandler(async (req, res) => {
     });
   } else {
     res.status(400);
-    throw new Error('Invalid user datal.');
+    throw new Error('Dados de usúarios invalidos');
   }
 });
 
@@ -72,7 +72,7 @@ const getUserProfile = asyncHandler(async (req, res) => {
     });
   } else {
     res.status(404);
-    throw new Error('Invalid email or password.');
+    throw new Error('Email ou senha inválidos');
   }
 });
 
