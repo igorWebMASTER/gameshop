@@ -103,7 +103,6 @@ const ProductScreen = ({ history, match }) => {
                         </Form.Control>
                       </Col>
                     </Row>
-                    7,,,,,,,,,,,,,,,,,,,,,,
                   </ListGroup.Item>
                 )}
 

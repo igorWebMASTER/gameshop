@@ -19,7 +19,9 @@ const Products = ({ product }) => {
       <Card.Body style={{ padding: '0.5em 0' }}>
         <Link to={`/product/${product._id}`}>
           <Card.Title as='div'>
-            <strong style={{ fontSize: '14px' }}>{product.name}</strong>
+            <strong style={{ fontSize: '14px' }}>
+              {product.name.toUpperCase()}
+            </strong>
           </Card.Title>
         </Link>
 
@@ -30,11 +32,11 @@ const Products = ({ product }) => {
           />
         </Card.Text>
         <Card.Text as='h3'>{formatPrice(product.price)}</Card.Text>
-        <Link to={`/product/${product._id}`}>
+        {/* <Link to={`/product/${product._id}`}>
           <Button variant='success' className='btn-md btn-block'>
             ADICIONAR PRODUTO
           </Button>
-        </Link>
+        </Link> */}
       </Card.Body>
     </Card>
   );
