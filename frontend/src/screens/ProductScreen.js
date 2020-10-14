@@ -43,7 +43,7 @@ const ProductScreen = ({ history, match }) => {
       ) : (
         <Row>
           <Col md={6}>
-            <Image src={product.image} alt={product.name} fluid />
+            <Image src={product.image} alt={product.name} fluid rounded />
           </Col>
           <Col md={3} sm={12}>
             <ListGroup variant='flush'>
@@ -108,6 +108,10 @@ const ProductScreen = ({ history, match }) => {
 
                 <ListGroup.Item>
                   <Button
+                    style={{
+                      backgroundColor: '#009e2a',
+                      textDecoration: 'none',
+                    }}
                     onClick={addToCartHandler}
                     className='btn btn-dark btn-block'
                     type='button'

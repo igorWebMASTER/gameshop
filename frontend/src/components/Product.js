@@ -12,14 +12,24 @@ const Products = ({ product }) => {
   };
 
   return (
-    <Card className='my-3 p-3 rounded hover-product--list'>
+    <Card
+      className='my-3 p-3 rounded hover-product--list'
+      style={{ textAlign: 'center' }}
+    >
       <Link to={`/product/${product._id}`}>
         <Card.Img src={product.image} variant='top' />
       </Link>
       <Card.Body style={{ padding: '0.5em 0' }}>
         <Link to={`/product/${product._id}`}>
           <Card.Title as='div'>
-            <strong style={{ fontSize: '14px' }}>
+            <strong
+              style={{
+                fontSize: '14px',
+                color: '#444',
+                fontWeight: '700',
+                textAlign: 'center',
+              }}
+            >
               {product.name.toUpperCase()}
             </strong>
           </Card.Title>
@@ -31,12 +41,21 @@ const Products = ({ product }) => {
             text={`${product.numReviews} avaliações`}
           />
         </Card.Text>
-        <Card.Text as='h3'>{formatPrice(product.price)}</Card.Text>
-        {/* <Link to={`/product/${product._id}`}>
-          <Button variant='success' className='btn-md btn-block'>
+        <Card.Text
+          as='h3'
+          style={{ color: '#e90313', fontWeight: 'bold', textAlign: 'center' }}
+        >
+          {formatPrice(product.price)}
+        </Card.Text>
+        <Link to={`/product/${product._id}`}>
+          <Button
+            variant='success'
+            className='btn-md btn-block'
+            style={{ backgroundColor: '#009e2a', textDecoration: 'none' }}
+          >
             ADICIONAR PRODUTO
           </Button>
-        </Link> */}
+        </Link>
       </Card.Body>
     </Card>
   );

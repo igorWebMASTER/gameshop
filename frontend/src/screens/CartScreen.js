@@ -89,7 +89,7 @@ const CartScreen = ({ match, location, history }) => {
                       type='button'
                       onClick={() => removeFromCartHandler(item.product)}
                     >
-                      <i className='fa fa-trash'></i>
+                      <i className='fa fa-trash' style={{ color: '#222' }}></i>
                     </Button>
                   </Col>
                 </Row>
@@ -106,15 +106,20 @@ const CartScreen = ({ match, location, history }) => {
                 Subtotal ({cartItems.reduce((acc, item) => acc + item.qty, 0)})
                 itens
               </h2>
-              R$
-              {cartItems
-                .reduce((acc, item) => acc + item.qty * item.price, 0)
-                .toFixed(2)}
+
+              <h4>
+                {' '}
+                R$
+                {cartItems
+                  .reduce((acc, item) => acc + item.qty * item.price, 0)
+                  .toFixed(2)}
+              </h4>
             </ListGroup.Item>
             <ListGroup.Item>
               <Button
                 type='button'
                 className='btn-block'
+                style={{ backgroundColor: '#009e2a' }}
                 disabled={cartItems.length === 0}
                 onClick={checkoutHandler}
               >
