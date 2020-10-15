@@ -41,10 +41,7 @@ const Products = ({ product }) => {
             text={`${product.numReviews} avaliações`}
           />
         </Card.Text>
-        <Card.Text
-          as='h3'
-          style={{ color: '#e90313', fontWeight: 'bold', textAlign: 'center' }}
-        >
+        <Card.Text as='h3' style={{ color: '#222', textAlign: 'center' }}>
           {formatPrice(product.price)}
         </Card.Text>
         <Link to={`/product/${product._id}`}>
