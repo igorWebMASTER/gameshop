@@ -5,8 +5,7 @@ import Message from '../components/Message';
 import Loader from '../components/Loader';
 import FormContainer from '../components/FormContainer';
 import { Row, Col, Form, Image, Button } from 'react-bootstrap';
-import { register } from '../actions/userActions';
-import { getUserDetails } from '../actions/userActions';
+import { getUserDetails, updateUserProfile } from '../actions/userActions';
 
 const ProfileScreen = ({ location, history }) => {
   const [name, setName] = useState('');
@@ -22,6 +21,9 @@ const ProfileScreen = ({ location, history }) => {
 
   const userLogin = useSelector((state) => state.userLogin);
   const { userInfo } = userLogin;
+
+  const userUpdateProfile = useSelector((state) => state.userUpdateProfile);
+  const { success } = userUpdateProfile;
 
   useEffect(() => {
     if (!userInfo) {
@@ -43,6 +45,7 @@ const ProfileScreen = ({ location, history }) => {
       setMessage('Senhas não são iguais');
     } else {
       //DISPATCH UPDATE PROFILER
+      dispatch(updateUserProfile({ id: user._id, name, email, password }));
     }
   };
 
@@ -52,6 +55,7 @@ const ProfileScreen = ({ location, history }) => {
         <h2>Atualizar dados</h2>
         {message && <Message variant='danger'>{message}</Message>}
         {error && <Message variant='danger'>{error}</Message>}
+        {success && <Message variant='success'>Dados atualizados!</Message>}
         {loading && <Loader />}
         <Form onSubmit={submitHandler}>
           <Form.Group controlId='name'>
