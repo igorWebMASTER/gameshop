@@ -13,7 +13,7 @@ const addOrderItems = asyncHandler(async (req, res) => {
     taxPrice,
     shippingPrice,
     totalPrice,
-  } = reqrequest.body;
+  } = req.body;
 
   if (orderItems && orderItems.length === 0) {
     res.status(400);
