@@ -11,8 +11,6 @@ const ShippingScreen = ({ history }) => {
 
   const { shippingAddress } = cart;
 
-  console.log(shippingAddress);
-
   const [address, setAddress] = useState('');
   const [city, setCity] = useState('');
   const [postalCode, setPostalCode] = useState('');
