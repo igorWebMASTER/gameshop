@@ -162,7 +162,7 @@ const PlaceOrder = ({ history }) => {
               <Button
                 type='button'
                 className='btn-block'
-                disbled={cart.cartItems === 0}
+                disabled={cart.cartItems === 0}
                 onClick={placeOrderHandler}
               >
                 Finalizar pedido
