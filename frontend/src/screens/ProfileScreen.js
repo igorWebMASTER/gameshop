@@ -4,6 +4,9 @@ import { useDispatch, useSelector } from 'react-redux';
 import Message from '../components/Message';
 import Loader from '../components/Loader';
 import FormContainer from '../components/FormContainer';
+import animationData from '../assets/lotties/4496-empty-cart.json';
+import Lottie from 'react-lottie';
+
 import { Row, Col, Form, Image, Button, Table } from 'react-bootstrap';
 import { getUserDetails, updateUserProfile } from '../actions/userActions';
 import { listMyOrders } from '../actions/orderActions';
@@ -52,6 +55,15 @@ const ProfileScreen = ({ location, history }) => {
       //DISPATCH UPDATE PROFILER
       dispatch(updateUserProfile({ id: user._id, name, email, password }));
     }
+  };
+
+  const defaultOptions = {
+    loop: true,
+    autoplay: true,
+    animationData: animationData,
+    rendererSettings: {
+      preserveAspectRatio: 'xMidYMid slice',
+    },
   };
 
   return (
@@ -115,6 +127,8 @@ const ProfileScreen = ({ location, history }) => {
           <Loader />
         ) : errorOrders ? (
           <Message variant='danger'>{errorOrders}</Message>
+        ) : orders ? (
+          <Lottie options={defaultOptions} height={400} width={400} />
         ) : (
           <Table striped bordered hover responsive className='table-md'>
             <thead>
