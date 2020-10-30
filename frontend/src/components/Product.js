@@ -12,10 +12,7 @@ const Products = ({ product }) => {
   };
 
   return (
-    <Card
-      className='my-3 p-3 rounded hover-product--list'
-      style={{ textAlign: 'center' }}
-    >
+    <Card className='my-3 p-3 rounded hover-product--list'>
       <Link to={`/product/${product._id}`}>
         <Card.Img src={product.image} variant='top' />
       </Link>
@@ -27,7 +24,6 @@ const Products = ({ product }) => {
                 fontSize: '14px',
                 color: '#444',
                 fontWeight: '700',
-                textAlign: 'center',
               }}
             >
               {product.name.toUpperCase()}
@@ -41,14 +37,18 @@ const Products = ({ product }) => {
             text={`${product.numReviews} avaliações`}
           />
         </Card.Text>
-        <Card.Text as='h3' style={{ color: '#222', textAlign: 'center' }}>
+        <Card.Text as='h3' style={{ color: '#222' }}>
           {formatPrice(product.price)}
         </Card.Text>
         <Link to={`/product/${product._id}`}>
           <Button
             variant='success'
             className='btn-md btn-block'
-            style={{ backgroundColor: '#009e2a', textDecoration: 'none' }}
+            style={{
+              backgroundColor: '#0BCBFF',
+              border: '1px solid',
+              textDecoration: 'none',
+            }}
           >
             ADICIONAR PRODUTO
           </Button>

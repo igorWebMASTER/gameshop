@@ -162,6 +162,7 @@ const PlaceOrder = ({ history }) => {
               <Button
                 type='button'
                 className='btn-block'
+                variant='primary'
                 disabled={cart.cartItems === 0}
                 onClick={placeOrderHandler}
               >

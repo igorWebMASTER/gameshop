@@ -109,7 +109,8 @@ const ProductScreen = ({ history, match }) => {
                 <ListGroup.Item>
                   <Button
                     style={{
-                      backgroundColor: '#009e2a',
+                      backgroundColor: '#0BCBFF',
+                      border: '1px solid',
                       textDecoration: 'none',
                     }}
                     onClick={addToCartHandler}
