@@ -22,7 +22,7 @@ h1 {
 }
 
 .rounded.hover-product--list:hover {
-  transition: all 300ms ease-in-out;
+  transition: all 900ms ease-in-out;
   border-radius: 8px;
   background: linear-gradient(225deg, #ffffff, #e6e6e6);
   box-shadow: -32px 32px 64px #d9d9d9, 32px -32px 64px #ffffff;
@@ -48,7 +48,22 @@ h2 {
 }
 
 #root > main > div > div > div > div {
+  transition: all 500ms ease-in-out;
+
   border-radius: 8px;
   background: linear-gradient(225deg, #e6e6e6, #ffffff);
-  box-shadow: -32px 32px 64px #d9d9d9, 32px -32px 64px #ffffff;
+  box-shadow: -32px 32px 64px #d9d9d9, 32px 32px 40px #ffffff;
+}
+
+#root > header > nav {
+  transition: all 500ms ease-in-out;
+  background: linear-gradient(225deg, #222, #333);
+  box-shadow: -02px 02px 64px #d9d9d9, 02px -2px 24px #ffffff;
+}
+#root > main > div > div > div > div:hover {
+  transition: all 500ms ease-in-out;
+
+  border-radius: 8px;
+  background: linear-gradient(225deg, #e6e6e6, #ffffff);
+  box-shadow: -02px 02px 64px #d9d9d9, 02px -2px 24px #ffffff;
 }
