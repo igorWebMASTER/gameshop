@@ -13,23 +13,54 @@ import {
 import Rating from '../components/Rating';
 import Message from '../components/Message';
 import Loader from '../components/Loader';
-import { listProductDetails } from '../actions/productActions';
+import {
+  listProductDetails,
+  createProductReview,
+} from '../actions/productActions';
+import { PRODUCT_CREATE_REVIEW_RESET } from '../constants/productConstants';
 
 const ProductScreen = ({ history, match }) => {
   const [quantity, setQuantity] = useState(1);
+  const [rating, setRating] = useState(0);
+  const [comment, setComment] = useState('');
 
   const dispatch = useDispatch();
 
   const productDetails = useSelector((state) => state.productDetails);
   const { loading, error, product } = productDetails;
 
+  const userLogin = useSelector((state) => state.userLogin);
+  const { userInfo } = userLogin;
+
+  const productReviewCreate = useSelector((state) => state.productReviewCreate);
+  const {
+    success: successProductReview,
+    error: errorProductReview,
+  } = productReviewCreate;
+
   const addToCartHandler = () => {
     history.push(`/cart/${match.params.id}?qty=${quantity}`);
   };
 
   useEffect(() => {
+    if (successProductReview) {
+      alert('Avaliação adicionada!');
+      setRating(0);
+      setComment('');
+      dispatch({ type: PRODUCT_CREATE_REVIEW_RESET });
+    }
     dispatch(listProductDetails(match.params.id));
-  }, [dispatch, match]);
+  }, [dispatch, match, successProductReview]);
+
+  const submitHandler = (e) => {
+    e.preventDefault();
+    dispatch(
+      createProductReview(match.params.id, {
+        rating,
+        comment,
+      })
+    );
+  };
 
   return (
     <>
@@ -41,90 +72,156 @@ const ProductScreen = ({ history, match }) => {
       ) : error ? (
         <Message variant='danger'>{error}</Message>
       ) : (
-        <Row>
-          <Col md={6}>
-            <Image src={product.image} alt={product.name} fluid rounded />
-          </Col>
-          <Col md={3} sm={12}>
-            <ListGroup variant='flush'>
-              <ListGroup.Item>
-                <h2>{product.name}</h2>
-              </ListGroup.Item>
-
-              <ListGroup.Item>
-                <Rating
-                  value={product.rating}
-                  text={`${product.numReviews} avaliações`}
-                />
-              </ListGroup.Item>
-
-              <ListGroup.Item>Price: ${product.price}</ListGroup.Item>
-
-              <ListGroup.Item>Descrição: {product.description}</ListGroup.Item>
-            </ListGroup>
-          </Col>
-          <Col md={3}>
-            <Card>
+        <>
+          <Row>
+            <Col md={6}>
+              <Image src={product.image} alt={product.name} fluid rounded />
+            </Col>
+            <Col md={3} sm={12}>
               <ListGroup variant='flush'>
                 <ListGroup.Item>
-                  <Row>
-                    <Col>Price:</Col>
-                    <Col>
-                      <strong>R$ {product.price}</strong>
-                    </Col>
-                  </Row>
+                  <h2>{product.name}</h2>
                 </ListGroup.Item>
 
                 <ListGroup.Item>
-                  <Row>
-                    <Col>
-                      {product.countInStock > 0
-                        ? 'Em estoque'
-                        : 'Produto indisponível'}
-                    </Col>
-                  </Row>
+                  <Rating
+                    value={product.rating}
+                    text={`${product.numReviews} avaliações`}
+                  />
                 </ListGroup.Item>
 
-                {product.countInStock > 0 && (
+                <ListGroup.Item>Price: ${product.price}</ListGroup.Item>
+
+                <ListGroup.Item>
+                  Descrição: {product.description}
+                </ListGroup.Item>
+              </ListGroup>
+            </Col>
+            <Col md={3}>
+              <Card>
+                <ListGroup variant='flush'>
                   <ListGroup.Item>
                     <Row>
-                      <Col>Quantidade</Col>
+                      <Col>Price:</Col>
                       <Col>
-                        <Form.Control
-                          as='select'
-                          value={quantity}
-                          onChange={(e) => setQuantity(e.target.value)}
-                        >
-                          {[...Array(product.countInStock).keys()].map((x) => (
-                            <option key={x + 1} value={x + 1}>
-                              {x + 1}
-                            </option>
-                          ))}
-                        </Form.Control>
+                        <strong>R$ {product.price}</strong>
                       </Col>
                     </Row>
                   </ListGroup.Item>
-                )}
 
+                  <ListGroup.Item>
+                    <Row>
+                      <Col>
+                        {product.countInStock > 0
+                          ? 'Em estoque'
+                          : 'Produto indisponível'}
+                      </Col>
+                    </Row>
+                  </ListGroup.Item>
+
+                  {product.countInStock > 0 && (
+                    <ListGroup.Item>
+                      <Row>
+                        <Col>Quantidade</Col>
+                        <Col>
+                          <Form.Control
+                            as='select'
+                            value={quantity}
+                            onChange={(e) => setQuantity(e.target.value)}
+                          >
+                            {[...Array(product.countInStock).keys()].map(
+                              (x) => (
+                                <option key={x + 1} value={x + 1}>
+                                  {x + 1}
+                                </option>
+                              )
+                            )}
+                          </Form.Control>
+                        </Col>
+                      </Row>
+                    </ListGroup.Item>
+                  )}
+
+                  <ListGroup.Item>
+                    <Button
+                      style={{
+                        backgroundColor: '#0BCBFF',
+                        border: '1px solid',
+                        textDecoration: 'none',
+                      }}
+                      onClick={addToCartHandler}
+                      className='btn btn-dark btn-block'
+                      type='button'
+                      disabled={product.countInStock <= 0}
+                    >
+                      Adicionar ao carrinho
+                    </Button>
+                  </ListGroup.Item>
+                </ListGroup>
+              </Card>
+            </Col>
+          </Row>
+          <Row>
+            <Col md={6} style={{ color: '#222' }}>
+              <h2>Avaliações</h2>
+              {product.reviews.length === 0 && <p> Sem avaliações</p>}
+              <ListGroup variant='flush'>
+                {product.reviews.map((review) => (
+                  <ListGroup.Item key={review._id}>
+                    <strong>{review.name}</strong>
+                    <Rating value={review.rating} />
+                    <p>{review.createdAt.substring(0, 10)}</p>
+                    <p>{review.comment}</p>
+                  </ListGroup.Item>
+                ))}
                 <ListGroup.Item>
-                  <Button
-                    style={{
-                      backgroundColor: '#0BCBFF',
-                      border: '1px solid',
-                      textDecoration: 'none',
-                    }}
-                    onClick={addToCartHandler}
-                    className='btn btn-dark btn-block'
-                    type='button'
-                    disabled={product.countInStock <= 0}
-                  >
-                    Adicionar ao carrinho
-                  </Button>
+                  <h2>Escreva uma avaliação:</h2>
+
+                  {errorProductReview && (
+                    <Message variant='danger'>{errorProductReview}</Message>
+                  )}
+
+                  {userInfo ? (
+                    <Form onSubmit={submitHandler}>
+                      <Form.Group controlId='rating'>
+                        <Form.Label>Avaliação</Form.Label>
+                        <Form.Control
+                          as='select'
+                          value={rating}
+                          onChange={(e) => setRating(e.target.value)}
+                        >
+                          <option value=''>Selecionar...</option>
+                          <option value='1'>1 - Pobre</option>
+                          <option value='2'>2 - Regular</option>
+                          <option value='3'>3 - Bom</option>
+                          <option value='4'>4 - Muito Bom</option>
+                          <option value='5'>5 - Excelente</option>
+                        </Form.Control>
+                      </Form.Group>
+                      <Form.Group controlId='comment'>
+                        <Form.Label>Comentário</Form.Label>
+                        <Form.Control
+                          as='textarea'
+                          row='3'
+                          value={comment}
+                          onChange={(e) => setComment(e.target.value)}
+                        ></Form.Control>
+                      </Form.Group>
+                      <Button type='submit' variant='primary'>
+                        Enviar
+                      </Button>
+                    </Form>
+                  ) : (
+                    <Message>
+                      Por favor faça o login <Link to='/login'>logar</Link> para
+                      fazer uma avaliação
+                    </Message>
+                  )}
                 </ListGroup.Item>
               </ListGroup>
-            </Card>
-          </Col>
-        </Row>
+            </Col>
+          </Row>
+        </>
       )}
     </>
   );
