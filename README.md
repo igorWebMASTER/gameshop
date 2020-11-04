@@ -14,7 +14,7 @@ Projeto MEARN (Mongo, Express, React e Node) para construação de e-commerce co
 - Reviews de produtos e avaliação
 - Principais produtos no carrosel
 - Páginação de produtos
-- Busca de produto
+- Busca de produtos
 - Perfil de usuário com pedidos
 - Admin product management
 - Admin user management
