@@ -11,7 +11,7 @@
     "dev": "concurrently \"yarn run client\" \"yarn run server\"",
     "data:import": "node backend/seeder",
     "data:destroy": "node backend/seeder -d",
-    "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install --prefix frontend && npm run build --prefix frontend"
+    "Heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install --prefix frontend && npm run build --prefix frontend"
   },
   "repository": "https://github.com/igorWebMASTER/gameshop.git",
   "author": "igorWebMASTER <igor_1917@hotmail.com>",
