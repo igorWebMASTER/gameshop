@@ -53,20 +53,22 @@ h2 {
   border-radius: 8px;
   background: linear-gradient(225deg, #e6e6e6, #ffffff);
   box-shadow: -32px 32px 64px #d9d9d9, 32px 32px 40px #ffffff;
-  padding-bottom: 20px;
 }
 
 #root > header > nav {
   transition: all 500ms ease-in-out;
   background: linear-gradient(225deg, #222, #333);
-  box-shadow: -02px 02px 64px #d9d9d9, 02px -2px 24px #ffffff;
+  box-shadow: -02px 02px 64px #d9d9d9, 02px -4px #ffffff;
 }
 #root > main > div > div > div > div:hover {
   transition: all 500ms ease-in-out;
-
-  border-radius: 8px;
+  border-radius: 2px;
   background: linear-gradient(225deg, #e6e6e6, #ffffff);
-  box-shadow: -02px 02px 64px #d9d9d9, 02px -2px 24px #ffffff;
+  box-shadow: -02px 02px 64px #d9d9d9, 02px -2px 14px #ffffff;
+}
+
+header > nav > div > form {
+  display: flex !important;
 }
 
 /* carousel */
@@ -98,5 +100,8 @@ h2 {
 @media (max-width: 900px) {
   .carousel-caption h2 {
     font-size: 2.5vw;
+  }
+  header > nav > div > form {
+    width: 100%;
   }
 }

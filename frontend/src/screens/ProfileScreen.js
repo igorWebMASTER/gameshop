@@ -1,15 +1,12 @@
 import React, { useState, useEffect } from 'react';
+import { Table, Form, Button, Row, Col } from 'react-bootstrap';
 import { LinkContainer } from 'react-router-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import Message from '../components/Message';
 import Loader from '../components/Loader';
-import FormContainer from '../components/FormContainer';
-import animationData from '../assets/lotties/4496-empty-cart.json';
-import Lottie from 'react-lottie';
-
-import { Row, Col, Form, Image, Button, Table } from 'react-bootstrap';
 import { getUserDetails, updateUserProfile } from '../actions/userActions';
 import { listMyOrders } from '../actions/orderActions';
+import { USER_UPDATE_PROFILE_RESET } from '../constants/userConstants';
 
 const ProfileScreen = ({ location, history }) => {
   const [name, setName] = useState('');
@@ -36,7 +33,8 @@ const ProfileScreen = ({ location, history }) => {
     if (!userInfo) {
       history.push('/login');
     } else {
-      if (!user.name) {
+      if (!user || !user.name || success) {
+        dispatch({ type: USER_UPDATE_PROFILE_RESET });
         dispatch(getUserDetails('profile'));
         dispatch(listMyOrders());
       } else {
@@ -44,100 +42,91 @@ const ProfileScreen = ({ location, history }) => {
         setEmail(user.email);
       }
     }
-  }, [dispatch, history, userInfo, user]);
+  }, [dispatch, history, userInfo, user, success]);
 
   const submitHandler = (e) => {
     e.preventDefault();
-    //DISPATCH REGISTER
     if (password !== confirmPassword) {
-      setMessage('Senhas não são iguais');
+      setMessage('Passwords do not match');
     } else {
-      //DISPATCH UPDATE PROFILER
       dispatch(updateUserProfile({ id: user._id, name, email, password }));
     }
-  };
-
-  const defaultOptions = {
-    loop: true,
-    autoplay: true,
-    animationData: animationData,
-    rendererSettings: {
-      preserveAspectRatio: 'xMidYMid slice',
-    },
   };
 
   return (
     <Row>
       <Col md={3}>
-        <h2>Atualizar dados</h2>
+        <h2>User Profile</h2>
         {message && <Message variant='danger'>{message}</Message>}
-        {error && <Message variant='danger'>{error}</Message>}
-        {success && <Message variant='success'>Dados atualizados!</Message>}
-        {loading && <Loader />}
-        <Form onSubmit={submitHandler}>
-          <Form.Group controlId='name'>
-            <Form.Label>Endereço de Email</Form.Label>
-            <Form.Control
-              type='text'
-              placeholder='Digite seu nome completo'
-              value={name}
-              onChange={(e) => setName(e.target.value)}
-            ></Form.Control>
-          </Form.Group>
+        {}
+        {success && <Message variant='success'>Profile Updated</Message>}
+        {loading ? (
+          <Loader />
+        ) : error ? (
+          <Message variant='danger'>{error}</Message>
+        ) : (
+          <Form onSubmit={submitHandler}>
+            <Form.Group controlId='name'>
+              <Form.Label>Name</Form.Label>
+              <Form.Control
+                type='name'
+                placeholder='Enter name'
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+              ></Form.Control>
+            </Form.Group>
 
-          <Form.Group controlId='email'>
-            <Form.Label>Endereço de Email</Form.Label>
-            <Form.Control
-              type='email'
-              placeholder='Digite seu email'
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-            ></Form.Control>
-          </Form.Group>
+            <Form.Group controlId='email'>
+              <Form.Label>Email Address</Form.Label>
+              <Form.Control
+                type='email'
+                placeholder='Enter email'
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+              ></Form.Control>
+            </Form.Group>
 
-          <Form.Group controlId='password'>
-            <Form.Label>Senha</Form.Label>
-            <Form.Control
-              type='password'
-              placeholder='Digite sua senha'
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-            ></Form.Control>
-          </Form.Group>
+            <Form.Group controlId='password'>
+              <Form.Label>Password</Form.Label>
+              <Form.Control
+                type='password'
+                placeholder='Enter password'
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+              ></Form.Control>
+            </Form.Group>
 
-          <Form.Group controlId='confirmPassword'>
-            <Form.Label>Confirmar senha</Form.Label>
-            <Form.Control
-              type='password'
-              placeholder='Confirme sua senha'
-              value={confirmPassword}
-              onChange={(e) => setConfirmPassword(e.target.value)}
-            ></Form.Control>
-          </Form.Group>
+            <Form.Group controlId='confirmPassword'>
+              <Form.Label>Confirm Password</Form.Label>
+              <Form.Control
+                type='password'
+                placeholder='Confirm password'
+                value={confirmPassword}
+                onChange={(e) => setConfirmPassword(e.target.value)}
+              ></Form.Control>
+            </Form.Group>
 
-          <Button type='submit' variant='primary'>
-            Atualizar
-          </Button>
-        </Form>
+            <Button type='submit' variant='primary'>
+              Update
+            </Button>
+          </Form>
+        )}
       </Col>
-
       <Col md={9}>
-        <h2>Meus pedidos</h2>
+        <h2>My Orders</h2>
         {loadingOrders ? (
           <Loader />
         ) : errorOrders ? (
           <Message variant='danger'>{errorOrders}</Message>
-        ) : orders ? (
-          <Lottie options={defaultOptions} height={400} width={400} />
         ) : (
-          <Table striped bordered hover responsive className='table-md'>
+          <Table striped bordered hover responsive className='table-sm'>
             <thead>
               <tr>
-                <td>ID</td>
-                <td>DATA</td>
-                <td>TOTAL</td>
-                <td>PAGO</td>
-                <td>ENTREGUE</td>
+                <th>ID</th>
+                <th>DATE</th>
+                <th>TOTAL</th>
+                <th>PAID</th>
+                <th>DELIVERED</th>
                 <th></th>
               </tr>
             </thead>
@@ -151,20 +140,20 @@ const ProfileScreen = ({ location, history }) => {
                     {order.isPaid ? (
                       order.paidAt.substring(0, 10)
                     ) : (
-                      <i class='fas fa-times' style={{ color: 'red' }}></i>
+                      <i className='fas fa-times' style={{ color: 'red' }}></i>
                     )}
                   </td>
                   <td>
                     {order.isDelivered ? (
-                      order.isDelivered.substring(0, 10)
+                      order.deliveredAt.substring(0, 10)
                     ) : (
-                      <i class='fas fa-times' style={{ color: 'red' }}></i>
+                      <i className='fas fa-times' style={{ color: 'red' }}></i>
                     )}
                   </td>
                   <td>
                     <LinkContainer to={`/order/${order._id}`}>
                       <Button className='btn-sm' variant='light'>
-                        Detalhes
+                        Details
                       </Button>
                     </LinkContainer>
                   </td>
