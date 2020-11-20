@@ -10,6 +10,7 @@ import { listProducts } from '../actions/productActions';
 import Message from '../components/Message';
 import Meta from '../components/Meta';
 import ProductCarousel from '../components/ProductCarousel';
+import TopProducts from '../components/TopProducts';
 
 const HomeScreen = ({ match }) => {
   const keyword = match.params.keyword;
@@ -29,7 +30,10 @@ const HomeScreen = ({ match }) => {
     <>
       <Meta />
       {!keyword ? (
-        <ProductCarousel />
+        <>
+          <ProductCarousel />
+          <TopProducts />
+        </>
       ) : (
         <Link to='/' className='btn btn-light'>
           Voltar{' '}
