@@ -194,7 +194,7 @@ const ProductScreen = ({ history, match }) => {
                           onChange={(e) => setRating(e.target.value)}
                         >
                           <option value=''>Selecionar...</option>
-                          <option value='1'>1 - Pobre</option>
+                          <option value='1'>1 - Ruim</option>
                           <option value='2'>2 - Regular</option>
                           <option value='3'>3 - Bom</option>
                           <option value='4'>4 - Muito Bom</option>

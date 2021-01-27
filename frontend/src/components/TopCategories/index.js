@@ -7,7 +7,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { listTopProducts } from '../../actions/productActions';
 import './style.css';
 
-const TopProducts = () => {
+const TopCategories = () => {
   const dispatch = useDispatch();
 
   const productTopRated = useSelector((state) => state.productTopRated);
@@ -34,10 +34,9 @@ const TopProducts = () => {
             <div className='top-products--right'>
               <span>
                 {' '}
-                <span> {product.name}</span> <br />
+                <span> {product.category}</span> <br />
                 <span>{product.description.substring(0, 50)}...</span> <br />
                 <Link to={`/product/${product._id}`}>
-                  <button>COMPRAR</button>
                 </Link>
               </span>
             </div>
@@ -48,4 +47,4 @@ const TopProducts = () => {
   );
 };
 
-export default TopProducts;
+export default TopCategories;

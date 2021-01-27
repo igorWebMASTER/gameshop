@@ -42,7 +42,7 @@ const CartScreen = ({ match, location, history }) => {
       <Col md={8}>
         <h1>Carrinho de compras</h1>
         {cartItems.length === 0 ? (
-          <Message>
+          <Message style={{}}>
             Seu carrinho está vazio <Link to='/'>Voltar</Link>
           </Message>
         ) : (
