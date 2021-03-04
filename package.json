@@ -11,7 +11,7 @@
     "dev": "concurrently \"npm run server\" \"npm run client\"",
     "data:import": "node backend/seeder",
     "data:destroy": "node backend/seeder -d",
-    "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install --prefix frontend && npm run build --prefix frontend"
+    "build": "NPM_CONFIG_PRODUCTION=false npm install --prefix frontend && npm run build --prefix frontend"
   },
   "repository": "https://github.com/igorWebMASTER/gameshop.git",
   "author": "igorWebMASTER <igor_1917@hotmail.com>",
@@ -26,7 +26,6 @@
     "mongoose": "^5.10.8",
     "morgan": "^1.10.0",
     "multer": "^1.4.2",
-    "react-helmet": "^6.1.0",
     "react-lottie": "^1.2.3",
     "styled-components": "^5.2.0"
   },
